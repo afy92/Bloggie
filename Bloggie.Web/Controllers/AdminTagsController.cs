@@ -13,7 +13,7 @@ namespace Bloggie.Web.Controllers
         [HttpPost]
         [ActionName("Add")]
         public IActionResult SubmitTag()
-        {
+        {//
             var name=Request.Form["name"];
             var display=Request.Form["display"];
             return View("Add");
