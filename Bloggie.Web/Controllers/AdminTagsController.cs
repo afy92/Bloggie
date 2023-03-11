@@ -1,11 +1,20 @@
-﻿using Bloggie.Web.Models.ViewModels;
+﻿using Bloggie.Web.Data;
+using Bloggie.Web.Models.Domain;
+using Bloggie.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bloggie.Web.Controllers
 {
     public class AdminTagsController : Controller
     {
+        private BloggieDbContext _bloggieDbContext;
+        //Dependency Injection 
+        public AdminTagsController(BloggieDbContext bloggieDbContext)
+        {
+            _bloggieDbContext = bloggieDbContext;
+        }
         [HttpGet]
+        //Tag ekleme get metodu
         public IActionResult Add()
         {
             return View();
@@ -21,10 +30,24 @@ namespace Bloggie.Web.Controllers
         //}
 
         public IActionResult Add(AddTagRequest addTagRequest)
-        {//
-            var name = addTagRequest.Name;
-            var display = addTagRequest.DisplayName;
+        {
+            //var name = addTagRequest.Name;
+            //var display = addTagRequest.DisplayName;
+            var tag = new Tag
+            {
+                Name = addTagRequest.Name,
+                DisplayName = addTagRequest.DisplayName,
+            };
+            _bloggieDbContext.Add(tag);
+            _bloggieDbContext.SaveChanges();
             return View("Add");
+        }
+        [HttpGet]
+        //Tag listeleme metodu
+        public IActionResult List()
+        {
+            var tags = _bloggieDbContext.Tags.ToList();
+            return View(tags);
         }
     }
 }
