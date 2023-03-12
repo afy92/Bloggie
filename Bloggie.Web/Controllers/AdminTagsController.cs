@@ -40,7 +40,7 @@ namespace Bloggie.Web.Controllers
             };
             _bloggieDbContext.Add(tag);
             _bloggieDbContext.SaveChanges();
-            return View("Add");
+            return RedirectToAction("List");
         }
         [HttpGet]
         //Tag listeleme metodu
@@ -48,6 +48,15 @@ namespace Bloggie.Web.Controllers
         {
             var tags = _bloggieDbContext.Tags.ToList();
             return View(tags);
+        }
+
+        //edit sayfasının görüntülenme action'ı
+        [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            //var tag = _bloggieDbContext.Tags.Find(); -- aşağıdakinin aynısı
+            var tag = _bloggieDbContext.Tags.FirstOrDefault(t => t.Id == id);
+            return View();
         }
     }
 }
