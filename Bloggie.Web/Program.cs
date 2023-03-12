@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-//DbContexti builder özelikleri kullanarak çapýrýyoruz.
+//DbContexti builder özelikleri kullanarak çaðýrýyoruz.
 builder.Services.AddDbContext<BloggieDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("BloggieDbConnectionString")));
 var app = builder.Build();
 
